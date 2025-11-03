@@ -1,0 +1,55 @@
+{
+  "name": "neurodivergent-visual-org",
+  "version": "1.0.0",
+  "description": "Visual organization tools for neurodivergent thinking - Creates compassionate Mermaid diagrams for task breakdowns, decision trees, project maps, time-boxing, habit building, and focus regulation. Designed for ADHD, autism, executive dysfunction, and time blindness.",
+  "author": {
+    "name": "Jack Reis",
+    "email": "jackareis@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JackReis/neurodivergent-visual-org.git"
+  },
+  "license": "MIT",
+  "categories": [
+    "Productivity",
+    "Accessibility",
+    "ADHD",
+    "Autism",
+    "Executive Function",
+    "Mental Health"
+  ],
+  "skills": [
+    {
+      "name": "neurodivergent-visual-org",
+      "path": "SKILL.md",
+      "description": "Create visual organizational tools designed for neurodivergent thinking patterns",
+      "references": [
+        "references/task-breakdowns.md",
+        "references/decision-tools.md",
+        "references/project-maps.md",
+        "references/current-state-boards.md",
+        "references/time-boxing.md",
+        "references/habit-building.md",
+        "references/accountability-support.md",
+        "references/focus-regulation.md"
+      ]
+    }
+  ],
+  "keywords": [
+    "neurodivergent",
+    "adhd",
+    "autism",
+    "executive-dysfunction",
+    "time-blindness",
+    "decision-paralysis",
+    "task-breakdown",
+    "visual-organization",
+    "mermaid",
+    "accessibility",
+    "productivity",
+    "focus",
+    "habits",
+    "decision-trees"
+  ]
+}
