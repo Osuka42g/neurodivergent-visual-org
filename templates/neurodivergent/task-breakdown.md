@@ -1,6 +1,16 @@
 ---
+mode: neurodivergent
+template: task-breakdown
+characteristics:
+  - compassionate_language
+  - energy_aware
+  - micro_steps
+  - anti_perfectionism
+  - realistic_time_estimates
+  - chunk_size: 3-5
+  - time_buffer: 1.5x-2x
 created: 2025-11-02T22:59
-updated: 2025-11-02T23:06
+updated: 2025-11-03
 ---
 # Task Breakdown Patterns
 
@@ -55,14 +65,14 @@ flowchart TD
     Check -->|< 20 emails| Batch[Do all at once<br/>15-20 min]
     Check -->|20-50 emails| Triage[Triage first<br/>Quick skim: 5 min<br/>Flag urgent: 2 min<br/>Then process: 20 min]
     Check -->|> 50 emails| Declare[Declare email bankruptcy<br/>Archive all<br/>Start fresh: 2 min]
-    
+
     Batch --> Done[Take break]
     Triage --> Process[Process flagged first<br/>10 min]
     Process --> Remaining[Batch remaining<br/>15 min]
     Remaining --> Done
     Declare --> Notify[Send note to key people<br/>if needed: 5 min]
     Notify --> Done
-    
+
     style Start fill:#e1f5ff
     style Done fill:#d4f1d4
     style Declare fill:#fff3cd
@@ -85,24 +95,24 @@ flowchart LR
         L2[Reply to 1 easy email<br/>3 min<br/>⚡]
         L3[Water plants<br/>5 min<br/>⚡]
     end
-    
-    subgraph Medium Energy  
+
+    subgraph Medium Energy
         M1[Write draft of doc<br/>20 min<br/>⚡⚡]
         M2[Review teammate's work<br/>15 min<br/>⚡⚡]
         M3[Organize files<br/>15 min<br/>⚡⚡]
     end
-    
+
     subgraph High Energy
         H1[Deep work on project<br/>45 min<br/>⚡⚡⚡]
         H2[Lead team meeting<br/>30 min<br/>⚡⚡⚡]
         H3[Complex problem-solving<br/>60 min<br/>⚡⚡⚡]
     end
-    
+
     Start[Assess current energy] --> Choose{What's your<br/>energy level?}
     Choose -->|Low| L1
     Choose -->|Medium| M1
     Choose -->|High| H1
-    
+
     style Start fill:#e1f5ff
     style Choose fill:#fff3cd
 ```

@@ -7,6 +7,75 @@ created: 2025-11-02T22:58
 updated: 2025-11-02T23:06
 ---
 
+## Mode System (v3.0)
+
+This skill supports three modes to adapt to different cognitive styles:
+
+### Mode Selection
+
+**1. Auto-Detect (Default)**
+- Analyzes user language for distress signals ("overwhelmed", "paralyzed", "stuck")
+- Detects mentions of neurodivergent conditions or executive dysfunction
+- Defaults to neurodivergent mode when ambiguous (inclusive design)
+
+**2. Explicit Mode Request**
+- User says: "Use neurotypical mode" or "Use ADHD mode"
+- Persists for current conversation unless changed
+
+**3. Configuration File**
+- User creates: `.claude/neurodivergent-visual-org-preference.yml`
+- Sets default mode, time multipliers, chunk sizes
+
+### Mode Characteristics
+
+| Aspect | Neurodivergent Mode | Neurotypical Mode |
+|--------|---------------------|-------------------|
+| Chunk size | 3-5 items | 5-7 items |
+| Time estimates | 1.5-2x with buffer | Standard |
+| Task granularity | 3-10 min micro-steps | 15-30 min tasks |
+| Language | Compassionate, validating | Direct, efficient |
+| Colors | Calming (blues/greens) | Standard themes |
+| Energy scaffolding | Explicit (spoons, breaks) | Minimal |
+
+### Backward Compatibility
+
+v3.0 defaults to neurodivergent mode to maintain v2.0 behavior. Users must explicitly enable neurotypical mode.
+
+## Mode Detection Algorithm
+
+**Step 1: Check for explicit mode request**
+```python
+if "neurotypical mode" in user_message.lower():
+    mode = "neurotypical"
+elif "adhd mode" or "neurodivergent mode" in user_message.lower():
+    mode = "neurodivergent"
+```
+
+**Step 2: Check configuration file**
+```python
+if mode is None and config_file_exists():
+    mode = load_user_preference()
+```
+
+**Step 3: Auto-detect from language**
+```python
+distress_signals = ["overwhelmed", "paralyzed", "stuck", "can't decide",
+                   "don't know where to start", "too much"]
+neurodivergent_mentions = ["adhd", "autism", "executive dysfunction",
+                          "time blindness", "decision paralysis"]
+energy_mentions = ["spoons", "burned out", "exhausted", "no energy"]
+
+if any(signal in user_message.lower() for signal in
+       distress_signals + neurodivergent_mentions + energy_mentions):
+    mode = "neurodivergent"
+```
+
+**Step 4: Default to neurodivergent (inclusive)**
+```python
+if mode is None:
+    mode = "neurodivergent"  # Backward compatible with v2.0
+```
+
 # Neurodivergent Visual Organization
 
 Create visual organizational tools that make invisible work visible and reduce cognitive overwhelm. This skill generates Mermaid diagrams optimized for neurodivergent thinking patterns, leveraging research-backed design principles that work WITH ADHD brain wiring rather than against it.
@@ -659,6 +728,33 @@ Based on the cognitive need, choose the appropriate diagram type from the compre
 - **Medium complexity** → Mindmap (3 levels), Quadrant chart (≤10 points)
 - **Detail needed** → Gantt chart, Sankey, User journey
 
+### Mode-Aware Template Selection
+
+After determining user need and mode:
+
+1. **Load template from mode-specific directory:**
+   - Neurodivergent: `templates/neurodivergent/[pattern].md`
+   - Neurotypical: `templates/neurotypical/[pattern].md`
+
+2. **Apply mode characteristics:**
+   - Chunk size limits
+   - Time estimate multipliers
+   - Language style
+   - Color schemes
+
+3. **Generate diagram:**
+   - Use Mermaid syntax from template
+   - Customize with user-specific content
+   - Apply mode-appropriate styling
+
+**Example:**
+```
+User: "I need to clean my apartment but don't know where to start" (auto-detect → neurodivergent)
+Pattern: task-breakdown
+Template: templates/neurodivergent/task-breakdown.md
+Characteristics: 3-5 minute tasks, compassionate language, energy indicators
+```
+
 ### Step 3: Apply Neurodivergent Design Principles
 
 Before generating the diagram, plan for:
@@ -750,6 +846,27 @@ If the user wants to save visualizations:
    ```
 3. Use clear, descriptive filenames: "Task Breakdown - Apartment Cleaning.md"
 4. Suggest tagging: #adhd-tools, #task-breakdown, etc.
+
+## Switching Modes Mid-Conversation
+
+Users can request mode changes:
+
+**To neurotypical mode:**
+- "Can you make this more high-level?"
+- "Use neurotypical mode for this diagram"
+- "Make it more efficient/compact"
+
+**To neurodivergent mode:**
+- "Break this down more"
+- "I'm feeling overwhelmed, can you simplify?"
+- "Use ADHD-friendly mode"
+
+**What changes when switching:**
+1. Regenerate current diagram with new mode template
+2. Adjust chunk sizes and time estimates
+3. Update language style
+4. Apply new color scheme
+5. Explain what changed and why
 
 ## Reference Files (Additional Patterns)
 

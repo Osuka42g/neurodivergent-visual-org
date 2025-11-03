@@ -1,6 +1,16 @@
 ---
+mode: neurodivergent
+template: current-state
+characteristics:
+  - compassionate_language
+  - energy_aware
+  - micro_steps
+  - anti_perfectionism
+  - realistic_time_estimates
+  - chunk_size: 3-5
+  - time_buffer: 1.5x-2x
 created: 2025-11-02T22:59
-updated: 2025-11-02T23:06
+updated: 2025-11-03
 ---
 # Current State Tracking Patterns
 

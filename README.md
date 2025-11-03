@@ -1,58 +1,49 @@
 ---
 created: 2025-11-02T22:59
-updated: 2025-11-02T23:06
+updated: 2025-11-03T00:30
 ---
-# Neurodivergent Visual Organization Skill v2.0
+# Neurodivergent Visual Organization Skill v3.0
 
-Upgraded skill for creating ADHD-friendly visual organizational tools using Mermaid diagrams.
+Upgraded skill for creating ADHD-friendly visual organizational tools using Mermaid diagrams with adaptive cognitive mode toggle.
 
-## What's New in v2.0
+## What's New in v3.0
 
 ### Major Enhancements
 
-1. **Comprehensive Mermaid 11.12.1 Coverage**
-   - Detailed syntax for all 22 diagram types
-   - Working code examples for each type
-   - Platform compatibility warnings (GitHub, Obsidian)
+1. **Neurotypical/Neurodivergent Mode Toggle**
+   - Three modes: neurotypical, neurodivergent, auto-detect
+   - Automatic language detection for optimal mode
+   - Explicit mode switching support
+   - User configuration preferences
 
-2. **Research-Backed Design Principles**
-   - Color psychology for ADHD brains
-   - Information density management (Miller's Law + ADHD)
-   - Cognitive load theory applications
-   - Visual hierarchy guidelines
+2. **Dual Template System**
+   - Separate template libraries for each cognitive style
+   - Neurotypical: 5-7 chunks, standard times, efficient layout
+   - Neurodivergent: 3-5 chunks, buffered times, compassionate language
+   - Mode-specific color schemes and scaffolding
 
-3. **Expanded Diagram Selection**
-   - Organized by cognitive need (not just task type)
-   - Executive function & task management
-   - Decision-making & prioritization
-   - Time & energy management
-   - Habits & routines
-   - Systems & processes
+3. **Enhanced Flexibility**
+   - Use neurodivergent mode for personal planning
+   - Switch to neurotypical mode for team presentations
+   - Auto-detect adapts to user's current state
+   - Mid-conversation mode switching
 
-4. **Comprehensive Troubleshooting**
-   - Common syntax errors with solutions
-   - Version compatibility notes
-   - Special character handling
-   - Configuration gotchas
+4. **Inclusive Design**
+   - Neurotypical users benefit during stress/burnout
+   - Teams can use same tool with different modes
+   - Educational: demonstrates cognitive accessibility
+   - Backward compatible (defaults to neurodivergent)
 
-5. **Detailed Example Scenarios**
-   - 6 complete workflow examples
-   - Task initiation paralysis
-   - Decision paralysis
-   - Multiple task overwhelm
-   - Time blindness struggle
-   - Habit building difficulty
-   - Energy management (spoon theory)
+## Mode Quick Reference
 
-6. **Anti-Patterns Section**
-   - Design, language, process, and technical anti-patterns
-   - Clear "do not do" guidelines
-
-7. **Scientific Foundation**
-   - Documents ADHD neuroscience basis
-   - Visual processing research
-   - Cognitive load theory
-   - WCAG accessibility guidelines
+| Need | Recommended Mode |
+|------|------------------|
+| Personal task overwhelm | Neurodivergent (auto-detects) |
+| Team presentation | Neurotypical (request explicitly) |
+| Executive dysfunction support | Neurodivergent |
+| Standard project planning | Neurotypical |
+| Mixed team collaboration | Auto-detect (adapts per person) |
+| Stress/burnout (any neurotype) | Neurodivergent |
 
 ## Installation
 
@@ -60,30 +51,72 @@ Upgraded skill for creating ADHD-friendly visual organizational tools using Merm
 
 1. Locate your skills directory (usually `~/Library/Application Support/Claude/skills/user/`)
 2. Backup existing `neurodivergent-visual-org` folder (if present)
-3. Copy the `neurodivergent-visual-org-v2` folder contents to:
+3. Copy the `neurodivergent-visual-org-v3` folder contents to:
    - `~/Library/Application Support/Claude/skills/user/neurodivergent-visual-org/`
 4. Restart Claude.ai Desktop app
 5. Skill will be automatically available
 
 ### For Manual Use
 
-Simply reference the `SKILL.md` file when creating ADHD-friendly visualizations. The reference files in the `references/` directory provide additional patterns and examples.
+Simply reference the `SKILL.md` file when creating ADHD-friendly visualizations. The reference files in the `templates/` directory provide additional patterns and examples.
+
+## Configuring Your Mode
+
+### Auto-Detect (Default)
+
+The skill automatically chooses the best mode based on your language:
+- Distress signals → Neurodivergent mode
+- Straightforward requests → Neurotypical mode
+- Ambiguous → Neurodivergent mode (inclusive default)
+
+### Explicit Mode Request
+
+In conversation:
+```
+"Use neurotypical mode for this diagram"
+"Switch to ADHD mode"
+"Make it more detailed" (switches to neurodivergent)
+"Make it more compact" (switches to neurotypical)
+```
+
+### Set Default Mode
+
+Create: `.claude/neurodivergent-visual-org-preference.yml`
+
+```yaml
+mode: auto-detect  # Options: neurotypical, neurodivergent, auto-detect
+time_buffer_multiplier: 1.5  # For neurodivergent: 1.5-2.0
+chunk_size_max: 5  # Max items per section
+color_scheme: calming  # Options: calming, standard
+```
 
 ## Package Contents
 
 ```
-neurodivergent-visual-org-v2/
-├── SKILL.md                          # Main skill file with comprehensive guide
+neurodivergent-visual-org-v3/
+├── SKILL.md                          # Main skill file with mode detection
 ├── README.md                         # This file
-└── references/                       # Additional pattern libraries
-    ├── accountability-support.md      # Body doubling, check-ins, crisis protocols
-    ├── current-state-boards.md        # Kanban, priority matrices, context tracking
-    ├── decision-tools.md              # Decision trees, weighted matrices
-    ├── focus-regulation.md            # Pre-task calm-down, sensory tools, recovery
-    ├── habit-building.md              # Tiny habits, routine sequences, stacking
-    ├── project-maps.md                # Phase maps, dependency diagrams
-    ├── task-breakdowns.md             # Linear timelines, branching breakdowns
-    └── time-boxing.md                 # Pomodoro, time-blocked days, energy mapping
+├── config/                           # Mode configuration
+│   ├── modes.md                      # Mode definitions
+│   └── user-preference.md            # Configuration guide
+├── templates/                        # Template libraries
+│   ├── neurodivergent/               # ADHD-optimized (v2.0 patterns)
+│   │   ├── task-breakdown.md
+│   │   ├── decision-tree.md
+│   │   ├── project-map.md
+│   │   ├── current-state.md
+│   │   ├── time-boxing.md
+│   │   ├── habit-building.md
+│   │   ├── accountability.md
+│   │   └── focus-regulation.md
+│   └── neurotypical/                 # Professional templates
+│       ├── task-breakdown.md
+│       ├── decision-tree.md
+│       └── project-map.md
+├── examples/                         # Mode comparison examples
+│   └── mode-comparison.md
+└── tests/                            # Test scenarios
+    └── test_mode_detection.md
 ```
 
 ## Quick Start
@@ -95,13 +128,14 @@ The skill activates when users:
 - Struggle with time blindness
 - Want to track habits or energy
 - Need visual organization tools
+- Request professional presentations
 
 ### Example Usage
 
 **User:** "I need to clean my apartment but it's so messy I don't know where to start"
 
 **Skill Response:**
-1. Recognizes task initiation paralysis
+1. Auto-detects neurodivergent mode (keywords: "so messy", "don't know where to start")
 2. Creates flowchart or timeline breaking cleaning into 10-15 minute chunks
 3. Starts with "quick wins" for visible progress
 4. Uses calming color theme
@@ -111,6 +145,7 @@ The skill activates when users:
 
 ## Key Principles
 
+### Neurodivergent Mode
 - **Compassionate language** (never "just" or "should")
 - **Realistic time estimates** (1.5-2x normal estimates)
 - **Energy awareness** (acknowledge spoon theory)
@@ -119,6 +154,14 @@ The skill activates when users:
 - **Celebrate starting** (not just finishing)
 - **3-5 information chunks** per section (working memory)
 - **Calming colors** (blues, greens, muted tones)
+
+### Neurotypical Mode
+- **Direct language** (efficient, professional)
+- **Standard time estimates** (no buffer)
+- **Standard tasks** (15-30 minute blocks)
+- **Professional presentation** (stakeholder-ready)
+- **5-7 information chunks** per section (Miller's Law)
+- **Standard color schemes** (Mermaid defaults)
 
 ## Mermaid Quick Reference
 
@@ -136,17 +179,30 @@ The skill activates when users:
 
 ### Cognitive Load Limits
 
-- **Flowcharts**: 15-20 nodes maximum
-- **Mindmaps**: 3-4 levels deep
-- **Pie charts**: 6-8 slices
+**Neurodivergent Mode:**
+- **Flowcharts**: 12-15 nodes maximum
+- **Mindmaps**: 2-3 levels deep
+- **Pie charts**: 4-6 slices
 - **Lists**: 2 lists × 3-5 items max
 - **Sections**: 3-5 per diagram
 
+**Neurotypical Mode:**
+- **Flowcharts**: 20-25 nodes maximum
+- **Mindmaps**: 4-5 levels deep
+- **Pie charts**: 6-8 slices
+- **Lists**: 2 lists × 5-7 items max
+- **Sections**: 5-7 per diagram
+
 ### Recommended Themes
 
+**Neurodivergent Mode:**
 - `forest` - Calming green-based
 - `neutral` - Muted earth tones
 - Both reduce visual overstimulation
+
+**Neurotypical Mode:**
+- `default` - Standard Mermaid theme
+- Any professional color scheme
 
 ## Troubleshooting
 
@@ -166,15 +222,22 @@ The skill activates when users:
 - All events before first `section` are ignored
 - Add section before any timeline events
 
+**Mode not detected correctly**
+- Use explicit mode request: "Use neurotypical mode"
+- Check configuration file syntax
+- See test scenarios in `tests/test_mode_detection.md`
+
 ## Support & Resources
 
 - **Reddit r/ADHD** - Community-shared patterns
-- **ADDitude Magazine** - Research-backed strategies  
+- **ADDitude Magazine** - Research-backed strategies
 - **CHADD** - Evidence-based resources
 - **Mermaid Live Editor** - mermaid.live for testing
+- **GitHub Repository** - Issues and discussions
 
 ## Version History
 
+- **v3.0** - Neurotypical/neurodivergent mode toggle, dual template system, auto-detection
 - **v2.0** - Comprehensive Mermaid syntax, research-backed design, troubleshooting
 - **v1.0** - Initial release with basic patterns
 
@@ -184,4 +247,4 @@ This skill incorporates research from neuroscience, cognitive psychology, and AD
 
 ---
 
-**Remember**: Visual tools work WITH ADHD brain wiring, not against it. These diagrams externalize executive function and make the invisible visible.
+**Remember**: Visual tools work WITH brain differences, not against them. These diagrams externalize executive function and make the invisible visible. Choose the mode that helps you right now.
