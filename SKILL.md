@@ -1,33 +1,60 @@
 ---
 name: neurodivergent-visual-org
-description: Create visual organizational tools (mind maps, task breakdowns, decision trees, kanban boards, project timelines) designed for neurodivergent thinking patterns. Use when users feel overwhelmed, need to break down tasks, navigate decisions, see dependencies, or track current state. Emphasizes compassionate language, realistic time estimates, energy-aware planning, and anti-perfectionism.
+description: Create visual organizational tools (mind maps, task breakdowns, decision trees, kanban boards, project timelines) designed for neurodivergent thinking patterns. Use when users feel overwhelmed, need to break down tasks, navigate decisions, see dependencies, or track current state. Emphasizes compassionate language, realistic time estimates, energy-aware planning, and anti-perfectionism. v3.1 adds colorblind-safe and monochrome accessibility modes.
 metadata:
-  version: 3.0
+  version: 3.1
   mermaid_version: 11.12.1
   created: 2025-11-03T00:28
-  updated: 2025-11-03T01:36
+  updated: 2025-11-04T20:12
+  changes_v3.1: Added colorblind-safe and monochrome accessibility modes
+created: 2025-11-03T00:28
+updated: 2025-11-04T22:19
 ---
 
-## Mode System (v3.0)
+## Mode System (v3.1)
 
-This skill supports three modes to adapt to different cognitive styles:
+This skill supports four modes to adapt to different cognitive styles and accessibility needs:
 
 ### Mode Selection
+
+**Base Modes** (choose one):
+1. **Neurodivergent Mode** - ADHD-friendly, energy-aware, compassionate language
+2. **Neurotypical Mode** - Direct, efficient, standard cognitive load
+
+**Accessibility Modes** (optional, combinable with base modes):
+3. **Colorblind-Safe Mode** - Pattern-based differentiation for all color vision types
+4. **Monochrome Mode** - Pure black & white optimized for printing and e-ink displays
+
+**Mode Combinations Available:**
+- Neurodivergent + Colorblind-Safe
+- Neurodivergent + Monochrome
+- Neurotypical + Colorblind-Safe
+- Neurotypical + Monochrome
+- Colorblind-Safe only (no base mode features)
+- Monochrome only (no base mode features)
+
+**Selection Methods:**
 
 **1. Auto-Detect (Default)**
 - Analyzes user language for distress signals ("overwhelmed", "paralyzed", "stuck")
 - Detects mentions of neurodivergent conditions or executive dysfunction
+- Detects accessibility requests ("colorblind-safe", "print-friendly", "grayscale")
 - Defaults to neurodivergent mode when ambiguous (inclusive design)
 
 **2. Explicit Mode Request**
 - User says: "Use neurotypical mode" or "Use ADHD mode"
+- User says: "Use colorblind-safe mode" or "Make it print-friendly"
+- User says: "Combine neurodivergent and colorblind-safe modes"
 - Persists for current conversation unless changed
 
 **3. Configuration File**
 - User creates: `.claude/neurodivergent-visual-org-preference.yml`
-- Sets default mode, time multipliers, chunk sizes
+- Sets default base mode, accessibility modes, time multipliers, chunk sizes
+- Can set auto-enable rules (e.g., monochrome for PDFs)
 
 ### Mode Characteristics
+
+**Base Mode Features:**
 
 | Aspect | Neurodivergent Mode | Neurotypical Mode |
 |--------|---------------------|-------------------|
@@ -38,27 +65,80 @@ This skill supports three modes to adapt to different cognitive styles:
 | Colors | Calming (blues/greens) | Standard themes |
 | Energy scaffolding | Explicit (spoons, breaks) | Minimal |
 
+**Accessibility Mode Features:**
+
+| Aspect | Colorblind-Safe Mode | Monochrome Mode |
+|--------|---------------------|-----------------|
+| Color usage | Redundant (patterns + color) | Pure B&W only (#000/#fff) |
+| Border patterns | Dashed/dotted variations | Solid/dashed/dotted styles |
+| Text labels | Prefixed ([KEEP], [DONATE]) | Verbose ([✓ KEEP], [? MAYBE]) |
+| Shape coding | Diamond/hexagon/trapezoid | Distinct geometric shapes |
+| Fill patterns | N/A (white fill, patterned borders) | Solid/crosshatch/dots/white |
+| Border thickness | 1-3px for hierarchy | 1-3px for hierarchy |
+| Symbols | Redundant icons (✅ 📦 🤔) | Text-based (✓ → ?) |
+| Best for | All color vision types | B&W printing, e-ink displays |
+| WCAG compliance | 2.1 AA (Use of Color 1.4.1) | 2.1 AAA (Maximum contrast) |
+
+**Mode Combination Notes:**
+- Base mode controls language, time estimates, and cognitive scaffolding
+- Accessibility mode controls visual encoding (patterns, contrast, shapes)
+- Both can be active simultaneously for maximum accommodation
+
 ### Backward Compatibility
 
-v3.0 defaults to neurodivergent mode to maintain v2.0 behavior. Users must explicitly enable neurotypical mode.
+v3.1 maintains v3.0 behavior:
+- Defaults to neurodivergent base mode (v2.0 compatible)
+- Accessibility modes are opt-in (not enabled by default)
+- v3.0 visualizations remain valid (no breaking changes)
 
 ## Mode Detection Algorithm
 
-**Step 1: Check for explicit mode request**
+**Step 1: Check for explicit base mode request**
 ```python
+base_mode = None
+accessibility_mode = None
+
+# Detect base mode
 if "neurotypical mode" in user_message.lower():
-    mode = "neurotypical"
+    base_mode = "neurotypical"
 elif "adhd mode" or "neurodivergent mode" in user_message.lower():
-    mode = "neurodivergent"
+    base_mode = "neurodivergent"
 ```
 
-**Step 2: Check configuration file**
+**Step 2: Check for explicit accessibility mode request**
 ```python
-if mode is None and config_file_exists():
-    mode = load_user_preference()
+# Detect colorblind-safe mode
+colorblind_keywords = ["colorblind", "color blind", "colorblind-safe",
+                      "colour blind", "accessible colors", "pattern-based",
+                      "cvd", "color vision deficiency"]
+if any(keyword in user_message.lower() for keyword in colorblind_keywords):
+    accessibility_mode = "colorblind-safe"
+
+# Detect monochrome mode (takes precedence over colorblind-safe)
+monochrome_keywords = ["monochrome", "black and white", "b&w", "grayscale",
+                      "greyscale", "print-friendly", "printing", "e-ink",
+                      "black & white", "photocopier"]
+if any(keyword in user_message.lower() for keyword in monochrome_keywords):
+    accessibility_mode = "monochrome"
 ```
 
-**Step 3: Auto-detect from language**
+**Step 3: Check configuration file**
+```python
+if config_file_exists():
+    config = load_user_preference()
+
+    # Apply base mode if not explicitly set
+    if base_mode is None:
+        base_mode = config.get("default_mode", "neurodivergent")
+
+    # Apply accessibility mode if not explicitly set
+    if accessibility_mode is None:
+        accessibility_mode = config.get("colorblind_safe", False) and "colorblind-safe"
+        if not accessibility_mode:
+            accessibility_mode = config.get("monochrome", False) and "monochrome"
+```
+
+**Step 4: Auto-detect base mode from language**
 ```python
 distress_signals = ["overwhelmed", "paralyzed", "stuck", "can't decide",
                    "don't know where to start", "too much"]
@@ -66,16 +146,294 @@ neurodivergent_mentions = ["adhd", "autism", "executive dysfunction",
                           "time blindness", "decision paralysis"]
 energy_mentions = ["spoons", "burned out", "exhausted", "no energy"]
 
-if any(signal in user_message.lower() for signal in
-       distress_signals + neurodivergent_mentions + energy_mentions):
-    mode = "neurodivergent"
+if base_mode is None:
+    if any(signal in user_message.lower() for signal in
+           distress_signals + neurodivergent_mentions + energy_mentions):
+        base_mode = "neurodivergent"
 ```
 
-**Step 4: Default to neurodivergent (inclusive)**
+**Step 5: Default to neurodivergent base mode (inclusive)**
 ```python
-if mode is None:
-    mode = "neurodivergent"  # Backward compatible with v2.0
+if base_mode is None:
+    base_mode = "neurodivergent"  # Backward compatible with v2.0
 ```
+
+**Step 6: Apply modes**
+```python
+# accessibility_mode can be None, "colorblind-safe", or "monochrome"
+# base_mode will always be "neurodivergent" or "neurotypical"
+apply_modes(base_mode=base_mode, accessibility_mode=accessibility_mode)
+```
+
+## Accessibility Mode Implementation
+
+### Colorblind-Safe Mode Specifications
+
+**Purpose:** Make diagrams accessible for all color vision types (protanopia, deuteranopia, tritanopia, achromatopsia) while remaining clear for regular color vision.
+
+**Design Principles:**
+1. **Never rely on color alone** - always pair with patterns, shapes, or text
+2. **Pattern-based differentiation** - use border styles as primary encoding
+3. **Explicit text labels** - prefix all nodes with type indicators
+4. **Shape coding** - use different node shapes for different categories
+5. **High contrast borders** - all nodes have bold, visible borders
+
+**Mermaid Implementation:**
+
+**Border Pattern System:**
+```mermaid
+%%{init: {'theme':'base'}}%%
+flowchart TD
+    Keep["[✅ KEEP] Item"]
+    Donate["[📦 DONATE] Item"]
+    Maybe["[🤔 MAYBE] Item"]
+    Break["[🛑 BREAK] Rest"]
+
+    style Keep fill:#ffffff,stroke:#000000,stroke-width:3px,stroke-dasharray: 5 5
+    style Donate fill:#ffffff,stroke:#000000,stroke-width:2px,stroke-dasharray: 10 5
+    style Maybe fill:#ffffff,stroke:#000000,stroke-width:2px,stroke-dasharray: 2 2
+    style Break fill:#ffffff,stroke:#000000,stroke-width:3px,stroke-dasharray: 1 4
+```
+
+**Pattern Legend:**
+- `stroke-dasharray: 5 5` - Short dashes (KEEP items, positive actions)
+- `stroke-dasharray: 10 5` - Long dashes (DONATE items, external actions)
+- `stroke-dasharray: 2 2` - Dots (MAYBE items, uncertain states)
+- `stroke-dasharray: 1 4` - Dot-dash (BREAK items, pauses)
+- `stroke-width: 3px` - Critical importance
+- `stroke-width: 2px` - Standard importance
+- `stroke-width: 1px` - Detail level
+
+**Shape Coding:**
+- `([text])` - Rounded rectangle: Standard process steps
+- `{text}` - Diamond: Decision points
+- `[[text]]` - Hexagon-style: Critical deadlines
+- `[/text/]` - Trapezoid: Break/rest states
+- `>text]` - Asymmetric: External dependencies
+
+**Text Prefix System:**
+- `[✅ KEEP]` - Items to keep
+- `[📦 DONATE]` - Items to donate/give away
+- `[🤔 MAYBE]` - Uncertain decisions
+- `[🛑 BREAK]` - Rest/break required
+- `[⚠️ CRITICAL]` - Critical deadline or warning
+- `[START]` - Starting point
+- `[END]` - Completion point
+- `[DECIDE]` - Decision point
+
+**Color Strategy:**
+- White fills (`#ffffff`) for all nodes
+- Black borders (`#000000`) for maximum contrast
+- Colors can be added for users with color vision, but information is encoded in patterns
+
+### Monochrome Mode Specifications
+
+**Purpose:** Optimize for black & white printing, photocopying, and e-ink displays where color is unavailable.
+
+**Design Principles:**
+1. **Pure black and white only** - no grays (print unreliably)
+2. **Fill pattern hierarchy** - use patterns to show importance
+3. **Border style differentiation** - solid/dashed/dotted for categories
+4. **Verbose text labels** - more explicit than colorblind-safe mode
+5. **Extra whitespace** - better print legibility
+
+**Mermaid Implementation:**
+
+**Fill Pattern System:**
+```mermaid
+%%{init: {'theme':'base'}}%%
+flowchart TD
+    Critical["[★ CRITICAL] Deadline"]
+    High["[! HIGH] Important"]
+    Medium["[→ MEDIUM] Standard"]
+    Standard["[○ STANDARD] Normal"]
+
+    style Critical fill:#000000,stroke:#000000,stroke-width:3px,color:#ffffff
+    style High fill:#ffffff,stroke:#000000,stroke-width:3px
+    style Medium fill:#ffffff,stroke:#000000,stroke-width:2px,stroke-dasharray: 10 5
+    style Standard fill:#ffffff,stroke:#000000,stroke-width:2px
+```
+
+**Fill Pattern Hierarchy:**
+- Solid black fill + white text: `fill:#000000,color:#ffffff` - Priority 1 (Critical)
+- White fill + bold border: `fill:#ffffff,stroke-width:3px` - Priority 2 (High)
+- White fill + dashed border: `stroke-dasharray: 10 5` - Priority 3 (Medium)
+- White fill + solid border: Standard weight - Priority 4 (Standard)
+
+**Border Style System:**
+- `stroke-width:3px` + solid - Critical/deadlines
+- `stroke-width:2px` + solid - Standard steps
+- `stroke-dasharray: 10 5` - Optional/medium priority
+- `stroke-dasharray: 5 5` - Maybe/uncertain
+- `stroke-dasharray: 2 2` - Breaks/pauses
+
+**Text Prefix System (Verbose):**
+- `[★ CRITICAL DEADLINE]` - Critical with visual marker
+- `[✓ KEEP]` - Text checkmark
+- `[→ DONATE]` - Text arrow
+- `[? MAYBE]` - Text question mark
+- `[■ BREAK]` - Text square (stop sign)
+- `[○ START]` - Text circle
+- `[● END]` - Filled circle
+
+**Spacing Considerations:**
+- Use more vertical space between nodes
+- Larger font sizes recommended (handled by `<br/>` for multi-line)
+- Wide margins in flowchart layout
+
+### Mode Combination Logic
+
+**When both base mode and accessibility mode are active:**
+
+1. **Base mode controls:**
+   - Language tone (compassionate vs direct)
+   - Time estimates (buffered vs standard)
+   - Task granularity (micro-steps vs standard tasks)
+   - Energy scaffolding (explicit vs minimal)
+
+2. **Accessibility mode controls:**
+   - Visual encoding (colors, patterns, shapes)
+   - Border styles and thickness
+   - Text prefix style
+   - Fill patterns (monochrome only)
+
+3. **Both modes respected simultaneously:**
+   - Neurodivergent + Colorblind-Safe = ADHD-friendly language + pattern-based visuals
+   - Neurodivergent + Monochrome = ADHD-friendly language + B&W print-optimized
+   - Neurotypical + Colorblind-Safe = Efficient language + pattern-based visuals
+   - Neurotypical + Monochrome = Efficient language + B&W print-optimized
+
+**Example Combined Output:**
+
+```mermaid
+%%{init: {'theme':'base'}}%%
+flowchart TD
+    Start(["[○ START] Decision time<br/>(Take 3 seconds max)"])
+    Q1{"[? DECIDE]<br/>Do I love it?<br/>(Not obligated)"}
+    Keep["[✓ KEEP]<br/>Pack for move<br/>(Fits in new space)"]
+    Donate["[→ DONATE]<br/>Helps someone else<br/>(Guilt-free)"]
+    Break["[■ BREAK]<br/>Rest 10 min<br/>(Decision fatigue signal)"]
+
+    Start --> Q1
+    Q1 -->|YES| Keep
+    Q1 -->|NO| Donate
+    Q1 -->|UNSURE| Break
+
+    style Start fill:#ffffff,stroke:#000000,stroke-width:3px
+    style Q1 fill:#ffffff,stroke:#000000,stroke-width:2px
+    style Keep fill:#ffffff,stroke:#000000,stroke-width:3px,stroke-dasharray: 5 5
+    style Donate fill:#ffffff,stroke:#000000,stroke-width:2px,stroke-dasharray: 10 5
+    style Break fill:#000000,stroke:#000000,stroke-width:3px,color:#ffffff
+```
+*This example shows: Neurodivergent language (compassionate, with parenthetical reassurance) + Monochrome visual encoding (B&W with patterns)*
+
+## Configuration File Schema
+
+Users can create a configuration file to set default modes and customize behavior:
+
+**File Location:** `.claude/neurodivergent-visual-org-preference.yml`
+
+**Complete Configuration Example:**
+
+```yaml
+# Neurodivergent Visual Org v3.1 Configuration
+
+# Base mode (required, choose one)
+default_mode: neurodivergent  # Options: neurodivergent, neurotypical
+
+# Accessibility modes (optional, can enable one or both)
+colorblind_safe: false         # Enable pattern-based differentiation
+monochrome: false              # Enable pure B&W print optimization
+
+# Auto-enable rules for accessibility modes
+# Note: These will PROMPT for confirmation before applying
+auto_prompt_monochrome:
+  when_printing: true           # Suggest monochrome when printing
+  when_exporting_pdf: true      # Suggest monochrome for PDF export
+  when_exporting_png: false     # Keep current mode for PNG exports
+
+auto_prompt_colorblind_safe:
+  when_sharing: true            # Suggest colorblind-safe for shared docs
+  when_public: true             # Suggest for public-facing documents
+
+# Base mode customizations
+neurodivergent_customizations:
+  chunk_size: 4                 # Items per chunk (3-5 recommended)
+  time_multiplier: 1.5          # Buffer multiplier for time estimates
+  micro_step_duration: 5        # Minutes per micro-step (3-10 recommended)
+  show_energy_scaffolding: true # Show spoons/breaks explicitly
+  use_compassionate_language: true
+
+neurotypical_customizations:
+  chunk_size: 6                 # Items per chunk (5-7 recommended)
+  time_multiplier: 1.0          # Standard time estimates
+  task_duration: 20             # Minutes per task (15-30 recommended)
+  show_energy_scaffolding: false
+  use_direct_language: true
+
+# Colorblind-safe mode customizations
+colorblind_safe_patterns:
+  keep: "short-dash"            # Options: short-dash, long-dash, dots, dot-dash, solid
+  donate: "long-dash"
+  maybe: "dots"
+  break: "dot-dash"
+  critical: "solid"
+
+  # Border thickness (1-3 recommended)
+  critical_thickness: 3
+  standard_thickness: 2
+  detail_thickness: 1
+
+# Monochrome mode customizations
+monochrome_fills:
+  priority_1_critical: "solid-black"  # Solid black fill, white text
+  priority_2_high: "white-bold"       # White fill, bold border
+  priority_3_medium: "white-dashed"   # White fill, dashed border
+  priority_4_standard: "white"        # White fill, standard border
+
+# General preferences
+preferences:
+  always_include_legends: true  # Include pattern/color legends in diagrams
+  verbose_labels: true          # Use longer, more explicit labels
+  extra_whitespace: false       # Add more space between nodes (good for printing)
+  show_wcag_compliance: false   # Show WCAG compliance notes
+
+# Mermaid.live link preferences
+mermaid_links:
+  # Note: Mermaid 11.12.1+ fixed <br/> encoding, no longer needs URL encoding
+  auto_generate: true           # Automatically provide mermaid.live links
+  use_base64: false             # Use URL params instead of base64 (more readable)
+```
+
+**Minimal Configuration (Just Change Defaults):**
+
+```yaml
+# Simple config - just set your preferred defaults
+default_mode: neurodivergent
+colorblind_safe: true   # Always use patterns for accessibility
+```
+
+**Print-Optimized Configuration:**
+
+```yaml
+# Optimized for printing and sharing
+default_mode: neurodivergent
+monochrome: true
+preferences:
+  extra_whitespace: true
+  verbose_labels: true
+```
+
+**Configuration Precedence:**
+
+1. **Explicit user request** in current message (highest priority)
+2. **Configuration file** settings
+3. **Auto-detection** from language
+4. **Default** (neurodivergent mode, no accessibility modes)
+
+**Loading Configuration:**
+
+The skill automatically checks for `.claude/neurodivergent-visual-org-preference.yml` at the start of each conversation. If found, settings are applied. Users can override any setting with explicit requests like "use colorblind-safe mode for this diagram".
 
 # Neurodivergent Visual Organization
 
@@ -850,7 +1208,7 @@ If the user wants to save visualizations:
 
 ## Switching Modes Mid-Conversation
 
-Users can request mode changes:
+Users can request mode changes at any time:
 
 **To neurotypical mode:**
 - "Can you make this more high-level?"
@@ -862,12 +1220,29 @@ Users can request mode changes:
 - "I'm feeling overwhelmed, can you simplify?"
 - "Use ADHD-friendly mode"
 
+**To colorblind-safe mode:**
+- "Make this colorblind-friendly"
+- "Use patterns instead of colors"
+- "I need this accessible for color vision deficiency"
+
+**To monochrome mode:**
+- "I need to print this in black and white"
+- "Make this e-ink friendly"
+- "Can you make a print-optimized version?"
+
+**To combine modes:**
+- "Use neurodivergent mode with colorblind-safe patterns"
+- "Make it ADHD-friendly and monochrome for printing"
+- "Neurotypical + colorblind-safe please"
+
 **What changes when switching:**
 1. Regenerate current diagram with new mode template
-2. Adjust chunk sizes and time estimates
-3. Update language style
-4. Apply new color scheme
-5. Explain what changed and why
+2. Adjust chunk sizes and time estimates (base mode)
+3. Update language style (base mode)
+4. Apply visual encoding patterns (accessibility mode)
+5. Update color scheme, borders, and fills
+6. Adjust text prefixes and labels
+7. Explain what changed and why
 
 ## Reference Files (Additional Patterns)
 
@@ -1064,9 +1439,82 @@ Active neurodivergent community innovation:
 
 **Key Insight**: Designing for cognitive accessibility creates better experiences for everyone. Visual diagrams that work for ADHD brains represent excellent information design universally.
 
+## Playground Links and URL Encoding
+
+When providing links to edit Mermaid diagrams in online playgrounds (like https://mermaid.live), you MUST properly URL-encode the diagram content, especially HTML entities like `<br/>` tags.
+
+### Common Issue: Broken `<br/>` Tags
+
+Mermaid diagrams use `<br/>` for line breaks in node text. These MUST be encoded properly in URLs.
+
+**❌ BROKEN** (angle brackets not encoded):
+```
+https://mermaid.live/edit#pako:flowchart TD
+    Start{Can decide<br/>in 3 seconds?}
+```
+
+**✅ CORRECT** (all characters properly encoded):
+```
+https://mermaid.live/edit#pako:flowchart%20TD%0A%20%20%20%20Start%7BCan%20decide%3Cbr%2F%3Ein%203%20seconds%3F%7D
+```
+
+### URL Encoding Rules
+
+Use Python's `urllib.parse.quote()` with `safe=''` to encode ALL special characters:
+
+```python
+import urllib.parse
+
+diagram = """flowchart TD
+    Start{Can decide<br/>in 3 seconds?}"""
+
+encoded = urllib.parse.quote(diagram, safe='')
+url = f"https://mermaid.live/edit#pako:{encoded}"
+```
+
+**Key encodings:**
+- `<` → `%3C`
+- `>` → `%3E`
+- `/` → `%2F`
+- Space → `%20`
+- Newline → `%0A`
+- `{` → `%7B`
+- `}` → `%7D`
+
+### When Providing Playground Links
+
+Always include properly encoded playground links in your diagram output:
+
+```markdown
+## 🎯 Master Decision Flowchart
+
+[🎨 Edit in Playground](https://mermaid.live/edit#pako:{PROPERLY_ENCODED_DIAGRAM})
+
+\`\`\`mermaid
+{DIAGRAM_CODE}
+\`\`\`
+```
+
+This allows users to:
+- View rendered diagrams online
+- Edit and customize diagrams
+- Share diagrams with collaborators
+- Access diagrams on mobile devices
+
+### Testing Links
+
+Before providing a playground link, verify that:
+1. The URL opens without errors
+2. The diagram renders correctly
+3. All `<br/>` tags display as line breaks (not literal `<br/>` text)
+
+If angle brackets appear as literal text in the rendered diagram, the URL encoding is broken.
+
 ## Version History
 
-- **v2.0** (Current): Comprehensive Mermaid 11.12.1 syntax, research-backed neurodivergent design principles, troubleshooting guide, expanded diagram types
+- **v3.0.1** (Current): Fixed playground link URL encoding for `<br/>` tags and other HTML entities. Added comprehensive URL encoding guidance and checklist item.
+- **v3.0** : Mode system (neurodivergent/neurotypical/auto-detect), configuration file support, enhanced accessibility features
+- **v2.0**: Comprehensive Mermaid 11.12.1 syntax, research-backed neurodivergent design principles, troubleshooting guide, expanded diagram types
 - **v1.0**: Initial release with basic patterns and reference files
 
 ---
@@ -1093,6 +1541,7 @@ Active neurodivergent community innovation:
 ✅ Validate with Mermaid tool
 ✅ Provide usage instructions
 ✅ Offer to save to Obsidian
+✅ Properly URL-encode playground links (especially `<br/>` tags)
 
 **Never:**
 ❌ Judgmental language ("just" or "should")

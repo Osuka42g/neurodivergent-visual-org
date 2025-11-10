@@ -10,7 +10,7 @@ characteristics:
   - chunk_size: 3-5
   - time_buffer: 1.5x-2x
 created: 2025-11-02T22:59
-updated: 2025-11-03
+updated: 2025-11-04T13:21
 ---
 # Task Breakdown Patterns
 
@@ -49,6 +49,9 @@ gantt
     Final look-around             :52:00, 03:00
 ```
 
+[🎨 Edit Gantt Chart in mermaid.live](https://mermaid.live/edit#gantt%0A%20%20%20%20title%20Clean%20Messy%20Bedroom%20%281%20hour%29%0A%20%20%20%20dateFormat%20mm%3Ass%0A%20%20%20%20section%20Phase%201%3A%20Quick%20Wins%0A%20%20%20%20Bin%20obvious%20rubbish%20%20%20%20%20%20%20%20%20%20%20%3A00%3A00%2C%2004%3A00%0A%20%20%20%20Grab%20dirty%20dishes%2Fcups%20%20%20%20%20%20%20%20%3A04%3A00%2C%2003%3A00%0A%20%20%20%20section%20Phase%202%3A%20Surfaces%0A%20%20%20%20Remove%20clutter%20from%20bed%20%20%20%20%20%20%20%3A07%3A00%2C%2005%3A00%0A%20%20%20%20Remove%20clutter%20from%20desk%20%20%20%20%20%20%3A12%3A00%2C%2005%3A00%0A%20%20%20%20Put%20clean%20clothes%20away%20%20%20%20%20%20%20%20%3A17%3A00%2C%2008%3A00%0A%20%20%20%20section%20Phase%203%3A%20Floor%0A%20%20%20%20Pick%20up%20items%20from%20floor%20%20%20%20%20%20%3A25%3A00%2C%2010%3A00%0A%20%20%20%20Quick%20vacuum%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3A35%3A00%2C%2008%3A00%0A%20%20%20%20section%20Phase%204%3A%20Final%20Pass%0A%20%20%20%20Make%20bed%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3A43%3A00%2C%2005%3A00%0A%20%20%20%20Straighten%20desk%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3A48%3A00%2C%2004%3A00%0A%20%20%20%20Final%20look-around%20%20%20%20%20%20%20%20%20%20%20%20%20%3A52%3A00%2C%2003%3A00%0A)
+
+
 **Key features:**
 - Starts with easiest/"quick win" tasks to build momentum
 - Groups related micro-tasks into phases
@@ -77,6 +80,9 @@ flowchart TD
     style Done fill:#d4f1d4
     style Declare fill:#fff3cd
 ```
+
+[🎨 Edit Flowchart in mermaid.live](https://mermaid.live/edit#flowchart%20TD%0A%20%20%20%20Start%5BProcess%20unread%20emails%5D%20--%3E%20Check%7BHow%20many%20emails%3F%7D%0A%20%20%20%20Check%20--%3E%7C%3C%2020%20emails%7C%20Batch%5BDo%20all%20at%20once%3Cbr%2F%3E15-20%20min%5D%0A%20%20%20%20Check%20--%3E%7C20-50%20emails%7C%20Triage%5BTriage%20first%3Cbr%2F%3EQuick%20skim%3A%205%20min%3Cbr%2F%3EFlag%20urgent%3A%202%20min%3Cbr%2F%3EThen%20process%3A%2020%20min%5D%0A%20%20%20%20Check%20--%3E%7C%3E%2050%20emails%7C%20Declare%5BDeclare%20email%20bankruptcy%3Cbr%2F%3EArchive%20all%3Cbr%2F%3EStart%20fresh%3A%202%20min%5D%0A%0A%20%20%20%20Batch%20--%3E%20Done%5BTake%20break%5D%0A%20%20%20%20Triage%20--%3E%20Process%5BProcess%20flagged%20first%3Cbr%2F%3E10%20min%5D%0A%20%20%20%20Process%20--%3E%20Remaining%5BBatch%20remaining%3Cbr%2F%3E15%20min%5D%0A%20%20%20%20Remaining%20--%3E%20Done%0A%20%20%20%20Declare%20--%3E%20Notify%5BSend%20note%20to%20key%20people%3Cbr%2F%3Eif%20needed%3A%205%20min%5D%0A%20%20%20%20Notify%20--%3E%20Done%0A%0A%20%20%20%20style%20Start%20fill%3A%23e1f5ff%0A%20%20%20%20style%20Done%20fill%3A%23d4f1d4%0A%20%20%20%20style%20Declare%20fill%3A%23fff3cd%0A)
+
 
 **Key features:**
 - Acknowledges different scenarios require different approaches
@@ -116,6 +122,9 @@ flowchart LR
     style Start fill:#e1f5ff
     style Choose fill:#fff3cd
 ```
+
+[🎨 Edit Flowchart in mermaid.live](https://mermaid.live/edit#flowchart%20LR%0A%20%20%20%20subgraph%20Low%20Energy%0A%20%20%20%20%20%20%20%20L1%5BCheck%20calendar%3Cbr%2F%3E2%20min%3Cbr%2F%3E%E2%9A%A1%5D%0A%20%20%20%20%20%20%20%20L2%5BReply%20to%201%20easy%20email%3Cbr%2F%3E3%20min%3Cbr%2F%3E%E2%9A%A1%5D%0A%20%20%20%20%20%20%20%20L3%5BWater%20plants%3Cbr%2F%3E5%20min%3Cbr%2F%3E%E2%9A%A1%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20Medium%20Energy%0A%20%20%20%20%20%20%20%20M1%5BWrite%20draft%20of%20doc%3Cbr%2F%3E20%20min%3Cbr%2F%3E%E2%9A%A1%E2%9A%A1%5D%0A%20%20%20%20%20%20%20%20M2%5BReview%20teammate%27s%20work%3Cbr%2F%3E15%20min%3Cbr%2F%3E%E2%9A%A1%E2%9A%A1%5D%0A%20%20%20%20%20%20%20%20M3%5BOrganize%20files%3Cbr%2F%3E15%20min%3Cbr%2F%3E%E2%9A%A1%E2%9A%A1%5D%0A%20%20%20%20end%0A%0A%20%20%20%20subgraph%20High%20Energy%0A%20%20%20%20%20%20%20%20H1%5BDeep%20work%20on%20project%3Cbr%2F%3E45%20min%3Cbr%2F%3E%E2%9A%A1%E2%9A%A1%E2%9A%A1%5D%0A%20%20%20%20%20%20%20%20H2%5BLead%20team%20meeting%3Cbr%2F%3E30%20min%3Cbr%2F%3E%E2%9A%A1%E2%9A%A1%E2%9A%A1%5D%0A%20%20%20%20%20%20%20%20H3%5BComplex%20problem-solving%3Cbr%2F%3E60%20min%3Cbr%2F%3E%E2%9A%A1%E2%9A%A1%E2%9A%A1%5D%0A%20%20%20%20end%0A%0A%20%20%20%20Start%5BAssess%20current%20energy%5D%20--%3E%20Choose%7BWhat%27s%20your%3Cbr%2F%3Eenergy%20level%3F%7D%0A%20%20%20%20Choose%20--%3E%7CLow%7C%20L1%0A%20%20%20%20Choose%20--%3E%7CMedium%7C%20M1%0A%20%20%20%20Choose%20--%3E%7CHigh%7C%20H1%0A%0A%20%20%20%20style%20Start%20fill%3A%23e1f5ff%0A%20%20%20%20style%20Choose%20fill%3A%23fff3cd%0A)
+
 
 **Key features:**
 - Sorts tasks by energy cost, not just priority
