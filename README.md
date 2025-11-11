@@ -1,32 +1,36 @@
 ---
 created: 2025-11-02T22:59
-updated: 2025-11-03T00:30
+updated: 2025-11-10T18:00
 ---
-# Neurodivergent Visual Organization Skill v3.0
+# Neurodivergent Visual Organization Skill v3.1.1
 
-Upgraded skill for creating ADHD-friendly visual organizational tools using Mermaid diagrams with adaptive cognitive mode toggle.
+Create ADHD-friendly visual organizational tools using Mermaid diagrams with adaptive cognitive modes and accessibility features.
 
-## What's New in v3.0
+## What's New in v3.1.1
 
-### Major Enhancements
+### Latest Updates
 
-1. **Neurotypical/Neurodivergent Mode Toggle**
-   - Three modes: neurotypical, neurodivergent, auto-detect
-   - Automatic language detection for optimal mode
-   - Explicit mode switching support
-   - User configuration preferences
+- **Generalized Examples**: Replaced context-specific examples with universal decision-making patterns for broader applicability
+- **Accessibility Modes**: Colorblind-safe and monochrome modes for inclusive design
+- **URL Encoding Fix**: Proper handling of HTML entities in Mermaid playground links
 
-2. **Dual Template System**
-   - Separate template libraries for each cognitive style
-   - Neurotypical: 5-7 chunks, standard times, efficient layout
-   - Neurodivergent: 3-5 chunks, buffered times, compassionate language
-   - Mode-specific color schemes and scaffolding
+## Core Features
 
-3. **Enhanced Flexibility**
-   - Use neurodivergent mode for personal planning
-   - Switch to neurotypical mode for team presentations
-   - Auto-detect adapts to user's current state
-   - Mid-conversation mode switching
+### 1. **Adaptive Mode System**
+   - **Base Modes**: Neurotypical or Neurodivergent cognitive styles
+   - **Accessibility Modes**: Optional colorblind-safe or monochrome overlays
+   - **Auto-Detection**: Analyzes language for optimal mode selection
+   - **Configuration Support**: Personalize defaults via YAML config
+
+### 2. **Dual Template System**
+   - **Neurotypical**: 5-7 chunks, standard times, efficient layout
+   - **Neurodivergent**: 3-5 chunks, buffered times, compassionate language
+   - Mode-specific color schemes and energy scaffolding
+
+### 3. **Accessibility First**
+   - **Colorblind-Safe**: Pattern-based differentiation for all color vision types
+   - **Monochrome**: Print-optimized B&W designs for e-ink displays
+   - **WCAG Compliance**: Meets accessibility standards
 
 4. **Inclusive Design**
    - Neurotypical users benefit during stress/burnout
