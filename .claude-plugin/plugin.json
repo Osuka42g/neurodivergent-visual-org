@@ -1,10 +1,10 @@
 {
   "name": "neurodivergent-visual-org",
-  "description": "Visual organization tools with adaptive cognitive modes (v3.0: neurotypical/neurodivergent toggle) - Creates compassionate diagrams for task breakdowns, decision trees, project maps. Auto-detects mode or manual override. Designed for ADHD, autism, executive dysfunction, time blindness, stress, and burnout.",
-  "version": "3.0.0",
+  "description": "Create ADHD-friendly visual organizational tools (Mermaid diagrams) optimized for neurodivergent thinking patterns with accessibility modes",
+  "version": "3.1.1",
   "author": {
     "name": "Jack Reis",
-    "email": "jackareis@gmail.com"
+    "email": "hello@jack.digital"
   },
   "homepage": "https://github.com/JackReis/neurodivergent-visual-org",
   "repository": "https://github.com/JackReis/neurodivergent-visual-org",
