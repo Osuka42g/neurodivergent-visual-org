@@ -51,18 +51,36 @@ Create ADHD-friendly visual organizational tools using Mermaid diagrams with ada
 
 ## Installation
 
+### Option 1: Via Marketplace (Recommended)
+
+In Claude Code, run:
+```
+/plugin marketplace add JackReis/neurodivergent-visual-org
+```
+
+Then browse and install via the `/plugin` menu.
+
+### Option 2: From GitHub
+
+```bash
+cd ~/.claude/plugins/
+git clone https://github.com/JackReis/neurodivergent-visual-org.git
+```
+
+Restart Claude Code.
+
+### Option 3: Manual Download
+
+1. Download the latest release from GitHub
+2. Extract to `~/.claude/plugins/neurodivergent-visual-org/`
+3. Restart Claude Code
+
 ### For Claude.ai Desktop (MCP Skills)
 
 1. Locate your skills directory (usually `~/Library/Application Support/Claude/skills/user/`)
-2. Backup existing `neurodivergent-visual-org` folder (if present)
-3. Copy the `neurodivergent-visual-org-v3` folder contents to:
+2. Copy the `skills/neurodivergent-visual-org/` folder to:
    - `~/Library/Application Support/Claude/skills/user/neurodivergent-visual-org/`
-4. Restart Claude.ai Desktop app
-5. Skill will be automatically available
-
-### For Manual Use
-
-Simply reference the `SKILL.md` file when creating ADHD-friendly visualizations. The reference files in the `templates/` directory provide additional patterns and examples.
+3. Restart Claude.ai Desktop app
 
 ## Configuring Your Mode
 
